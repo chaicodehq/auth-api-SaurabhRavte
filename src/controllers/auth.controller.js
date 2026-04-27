@@ -19,9 +19,11 @@ export async function register(req, res, next) {
     if (emailExists)
       return res
         .status(409)
-        .json({ error: { message: "Email already exits" } });
+        .json({ error: { message: "Email already exists" } });
 
     const user = await User.create({ name, email, password });
+
+    user.password = undefined;
 
     return res.status(201).json({ user });
   } catch (error) {
